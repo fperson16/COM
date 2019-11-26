@@ -1,0 +1,36 @@
+#pragma once
+#include <iostream>
+#include <windows.h>
+
+//异步串口
+class AsynCom
+{
+private:
+	//存串口句柄
+	uint8_t pHandle[4];
+	//写事件
+	OVERLAPPED ovSend;
+	//收事件
+	OVERLAPPED ovRec;
+	//等待事件
+	OVERLAPPED ovWait;
+
+public:
+	AsynCom();
+	~AsynCom();
+
+public:
+	//串口状态
+	bool comStatic = false;
+
+public:
+	//初始化
+	bool init(const char* com);
+	//发送
+	int send(std::string data);
+	//接收 map<"false", string>map<"true", string>
+	std::string rec( AsynCom* w);
+	//关闭
+	void close();
+};
+
